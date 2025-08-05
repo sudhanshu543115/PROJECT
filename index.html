@@ -1,0 +1,2483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Keeper - Advanced Healthcare Management</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8fafc;
+            overflow-x: hidden;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        .min-h-screen {
+            min-height: 100vh;
+        }
+        
+        .flex {
+            display: flex;
+        }
+        
+        .flex-col {
+            flex-direction: column;
+        }
+        
+        .flex-row {
+            flex-direction: row;
+        }
+        
+        .items-center {
+            align-items: center;
+        }
+        
+        .justify-center {
+            justify-content: center;
+        }
+        
+        .justify-between {
+            justify-content: space-between;
+        }
+        
+        .py-12 {
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+        }
+        
+        .sm\:px-6 {
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+        }
+        
+        .lg\:px-8 {
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+        
+        .relative {
+            position: relative;
+        }
+        
+        .overflow-hidden {
+            overflow: hidden;
+        }
+        
+        .absolute {
+            position: absolute;
+        }
+        
+        .inset-0 {
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+        
+        .w-full {
+            width: 100%;
+        }
+        
+        .h-full {
+            height: 100%;
+        }
+        
+        .object-cover {
+            object-fit: cover;
+        }
+        
+        .z-0 {
+            z-index: 0;
+        }
+        
+        .z-10 {
+            z-index: 10;
+        }
+        
+        .sm\:mx-auto {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .sm\:w-full {
+            width: 100%;
+        }
+        
+        .sm\:max-w-md {
+            max-width: 28rem;
+        }
+        
+        .mt-6 {
+            margin-top: 1.5rem;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .text-3xl {
+            font-size: 1.875rem;
+        }
+        
+        .font-extrabold {
+            font-weight: 800;
+        }
+        
+        .text-white {
+            color: white;
+        }
+        
+        .h-16 {
+            height: 4rem;
+        }
+        
+        .w-auto {
+            width: auto;
+        }
+        
+        .mt-8 {
+            margin-top: 2rem;
+        }
+        
+        .bg-white {
+            background-color: white;
+        }
+        
+        .bg-opacity-90 {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .py-8 {
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+        
+        .px-4 {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        
+        .shadow-xl {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .sm\:rounded-lg {
+            border-radius: 0.5rem;
+        }
+        
+        .sm\:px-10 {
+            padding-left: 2.5rem;
+            padding-right: 2.5rem;
+        }
+        
+        .space-y-6 > * + * {
+            margin-top: 1.5rem;
+        }
+        
+        .block {
+            display: block;
+        }
+        
+        .text-sm {
+            font-size: 0.875rem;
+        }
+        
+        .font-medium {
+            font-weight: 500;
+        }
+        
+        .text-gray-700 {
+            color: #374151;
+        }
+        
+        .mt-1 {
+            margin-top: 0.25rem;
+        }
+        
+        .appearance-none {
+            appearance: none;
+        }
+        
+        .px-3 {
+            padding-left: 0.75rem;
+            padding-right: 0.75rem;
+        }
+        
+        .py-2 {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+        
+        .border {
+            border-width: 1px;
+        }
+        
+        .border-gray-300 {
+            border-color: #d1d5db;
+        }
+        
+        .rounded-md {
+            border-radius: 0.375rem;
+        }
+        
+        .shadow-sm {
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+        
+        .placeholder-gray-400 {
+            color: #9ca3af;
+        }
+        
+        .focus\:outline-none:focus {
+            outline: none;
+        }
+        
+        .focus\:ring-indigo-500:focus {
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+        
+        .focus\:border-indigo-500:focus {
+            border-color: #6366f1;
+        }
+        
+        .sm\:text-sm {
+            font-size: 0.875rem;
+        }
+        
+        .flex.items-center.justify-between {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .h-4 {
+            height: 1rem;
+        }
+        
+        .w-4 {
+            width: 1rem;
+        }
+        
+        .text-indigo-600 {
+            color: #6366f1;
+        }
+        
+        .focus\:ring-indigo-500:focus {
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+        
+        .border-gray-300 {
+            border-color: #d1d5db;
+        }
+        
+        .rounded {
+            border-radius: 0.25rem;
+        }
+        
+        .ml-2 {
+            margin-left: 0.5rem;
+        }
+        
+        .text-gray-900 {
+            color: #111827;
+        }
+        
+        .font-medium.text-indigo-600 {
+            color: #6366f1;
+            font-weight: 500;
+        }
+        
+        .hover\:text-indigo-500:hover {
+            color: #6366f1;
+        }
+        
+        .w-full.flex.justify-center {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .py-2.px-4 {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        
+        .border-transparent {
+            border-color: transparent;
+        }
+        
+        .rounded-md {
+            border-radius: 0.375rem;
+        }
+        
+        .shadow-sm {
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+        
+        .text-sm.font-medium {
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .text-white {
+            color: white;
+        }
+        
+        .bg-indigo-600 {
+            background-color: #6366f1;
+        }
+        
+        .hover\:bg-indigo-700:hover {
+            background-color: #4338ca;
+        }
+        
+        .focus\:outline-none:focus {
+            outline: none;
+        }
+        
+        .focus\:ring-2:focus {
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.1);
+        }
+        
+        .focus\:ring-offset-2:focus {
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.1), 0 0 0 4px rgba(255, 255, 255, 0.1);
+        }
+        
+        .focus\:ring-indigo-500:focus {
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+        
+        .border-gray-300 {
+            border-color: #d1d5db;
+        }
+        
+        .text-gray-700 {
+            color: #374151;
+        }
+        
+        .hover\:bg-gray-50:hover {
+            background-color: #f9fafb;
+        }
+        
+        .focus\:outline-none:focus {
+            outline: none;
+        }
+        
+        .focus\:ring-2:focus {
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.1);
+        }
+        
+        .focus\:ring-offset-2:focus {
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.1), 0 0 0 4px rgba(255, 255, 255, 0.1);
+        }
+        
+        .focus\:ring-indigo-500:focus {
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+        
+        .grid {
+            display: grid;
+        }
+        
+        .grid-cols-2 {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        
+        .gap-4 {
+            gap: 1rem;
+        }
+        
+        .mx-auto {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .w-12 {
+            width: 3rem;
+        }
+        
+        .h-12 {
+            height: 3rem;
+        }
+        
+        .bg-gray-800 {
+            background-color: #1f2937;
+        }
+        
+        .rounded-lg {
+            border-radius: 0.5rem;
+        }
+        
+        .flex.items-center.justify-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .mb-4 {
+            margin-bottom: 1rem;
+        }
+        
+        .w-6 {
+            width: 1.5rem;
+        }
+        
+        .h-6 {
+            height: 1.5rem;
+        }
+        
+        .text-xl {
+            font-size: 1.25rem;
+        }
+        
+        .font-bold {
+            font-weight: 700;
+        }
+        
+        .text-gray-900 {
+            color: #111827;
+        }
+        
+        .mb-6 {
+            margin-bottom: 1.5rem;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .text-sm.text-indigo-600 {
+            font-size: 0.875rem;
+            color: #6366f1;
+        }
+        
+        .hover\:text-indigo-500:hover {
+            color: #6366f1;
+        }
+        
+        /* Hero Section Styles */
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.8) 0%, rgba(139, 92, 246, 0.8) 100%);
+        }
+        
+        #login-page {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.5) 0%, rgba(139, 92, 246, 0.5) 100%);
+        }
+        
+        #hospitalVideo {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+        
+        .card-3d {
+            transform-style: preserve-3d;
+            transition: all 0.5s ease;
+        }
+        
+        .card-3d:hover {
+            transform: rotateY(10deg) rotateX(5deg) translateY(-10px);
+            box-shadow: 0 30px 50px -15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .navbar {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transform-style: preserve-3d;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar:hover {
+            transform: translateY(3px) translateZ(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .nav-link:hover {
+            transform: translateZ(10px) rotateX(5deg);
+            color: #4f46e5 !important;
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .health-score {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 24px;
+        }
+        
+        .chat-bubble {
+            border-radius: 20px;
+            position: relative;
+            max-width: 80%;
+        }
+        
+        .user-bubble {
+            background-color: #6366f1;
+            color: white;
+            align-self: flex-end;
+        }
+        
+        .ai-bubble {
+            background-color: #e5e7eb;
+            color: #111827;
+            align-self: flex-start;
+        }
+        
+        .step-counter {
+            background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+        }
+        
+        .payment-card {
+            background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+        }
+        
+        .medical-history-card {
+            background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
+        }
+        
+        /* Additional responsive utilities */
+        .sm\:flex {
+            display: flex;
+        }
+        
+        .lg\:flex-row {
+            flex-direction: row;
+        }
+        
+        .lg\:w-1\/2 {
+            width: 50%;
+        }
+        
+        .lg\:w-2\/3 {
+            width: 66.666667%;
+        }
+        
+        .lg\:w-1\/3 {
+            width: 33.333333%;
+        }
+        
+        .lg\:col-span-1 {
+            grid-column: span 1 / span 1;
+        }
+        
+        .lg\:col-span-2 {
+            grid-column: span 2 / span 2;
+        }
+        
+        .lg\:col-span-3 {
+            grid-column: span 3 / span 3;
+        }
+        
+        .md\:grid-cols-2 {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        
+        .lg\:grid-cols-3 {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+        
+        .gap-8 {
+            gap: 2rem;
+        }
+        
+        .pt-32 {
+            padding-top: 8rem;
+        }
+        
+        .pb-20 {
+            padding-bottom: 5rem;
+        }
+        
+        .py-20 {
+            padding-top: 5rem;
+            padding-bottom: 5rem;
+        }
+        
+        .bg-gray-50 {
+            background-color: #f9fafb;
+        }
+        
+        .max-w-7xl {
+            max-width: 80rem;
+        }
+        
+        .px-4 {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        
+        .sm\:px-6 {
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+        }
+        
+        .lg\:px-8 {
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+        
+        .text-4xl {
+            font-size: 2.25rem;
+        }
+        
+        .md\:text-5xl {
+            font-size: 3rem;
+        }
+        
+        .mb-6 {
+            margin-bottom: 1.5rem;
+        }
+        
+        .text-lg {
+            font-size: 1.125rem;
+        }
+        
+        .mb-8 {
+            margin-bottom: 2rem;
+        }
+        
+        .sm\:flex-row {
+            flex-direction: row;
+        }
+        
+        .gap-4 {
+            gap: 1rem;
+        }
+        
+        .px-6 {
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+        }
+        
+        .py-3 {
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
+        }
+        
+        .rounded-lg {
+            border-radius: 0.5rem;
+        }
+        
+        .font-medium {
+            font-weight: 500;
+        }
+        
+        .hover\:bg-gray-100:hover {
+            background-color: #f3f4f6;
+        }
+        
+        .transition {
+            transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 150ms;
+        }
+        
+        .duration-300 {
+            transition-duration: 300ms;
+        }
+        
+        .border-2 {
+            border-width: 2px;
+        }
+        
+        .border-white {
+            border-color: white;
+        }
+        
+        .hover\:bg-white:hover {
+            background-color: white;
+        }
+        
+        .hover\:text-indigo-600:hover {
+            color: #6366f1;
+        }
+        
+        .justify-center {
+            justify-content: center;
+        }
+        
+        .relative {
+            position: relative;
+        }
+        
+        .max-w-lg {
+            max-width: 32rem;
+        }
+        
+        .h-96 {
+            height: 24rem;
+        }
+        
+        .object-contain {
+            object-fit: contain;
+        }
+        
+        .text-3xl {
+            font-size: 1.875rem;
+        }
+        
+        .font-bold {
+            font-weight: 700;
+        }
+        
+        .text-gray-900 {
+            color: #111827;
+        }
+        
+        .mb-4 {
+            margin-bottom: 1rem;
+        }
+        
+        .max-w-3xl {
+            max-width: 48rem;
+        }
+        
+        .mx-auto {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .text-gray-600 {
+            color: #4b5563;
+        }
+        
+        .bg-white {
+            background-color: white;
+        }
+        
+        .rounded-xl {
+            border-radius: 0.75rem;
+        }
+        
+        .shadow-lg {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .overflow-hidden {
+            overflow: hidden;
+        }
+        
+        .p-6 {
+            padding: 1.5rem;
+        }
+        
+        .hover\:bg-gray-50:hover {
+            background-color: #f9fafb;
+        }
+        
+        .mx-auto {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .h-10 {
+            height: 2.5rem;
+        }
+        
+        .w-10 {
+            width: 2.5rem;
+        }
+        
+        .text-indigo-600 {
+            color: #6366f1;
+        }
+        
+        .text-xl {
+            font-size: 1.25rem;
+        }
+        
+        .font-semibold {
+            font-weight: 600;
+        }
+        
+        .mb-3 {
+            margin-bottom: 0.75rem;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .text-gray-600 {
+            color: #4b5563;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        /* Navbar styles */
+        .navbar.fixed {
+            position: fixed;
+        }
+        
+        .w-full {
+            width: 100%;
+        }
+        
+        .z-50 {
+            z-index: 50;
+        }
+        
+        .bg-white {
+            background-color: white;
+        }
+        
+        .bg-opacity-80 {
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .shadow-sm {
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+        
+        .h-16 {
+            height: 4rem;
+        }
+        
+        .flex-shrink-0 {
+            flex-shrink: 0;
+        }
+        
+        .ml-2 {
+            margin-left: 0.5rem;
+        }
+        
+        .text-xl {
+            font-size: 1.25rem;
+        }
+        
+        .font-bold {
+            font-weight: 700;
+        }
+        
+        .text-indigo-600 {
+            color: #6366f1;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .sm\:ml-6 {
+            margin-left: 1.5rem;
+        }
+        
+        .sm\:flex {
+            display: flex;
+        }
+        
+        .sm\:items-center {
+            align-items: center;
+        }
+        
+        .space-x-2 > * + * {
+            margin-left: 0.5rem;
+        }
+        
+        .px-3 {
+            padding-left: 0.75rem;
+            padding-right: 0.75rem;
+        }
+        
+        .py-2 {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+        
+        .rounded-md {
+            border-radius: 0.375rem;
+        }
+        
+        .text-sm {
+            font-size: 0.875rem;
+        }
+        
+        .font-medium {
+            font-weight: 500;
+        }
+        
+        .text-gray-700 {
+            color: #374151;
+        }
+        
+        .hover\:text-indigo-600:hover {
+            color: #6366f1;
+        }
+        
+        .bg-indigo-600 {
+            background-color: #6366f1;
+        }
+        
+        .text-white {
+            color: white;
+        }
+        
+        .px-4 {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        
+        .py-2 {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+        
+        .rounded-md {
+            border-radius: 0.375rem;
+        }
+        
+        .text-sm {
+            font-size: 0.875rem;
+        }
+        
+        .font-medium {
+            font-weight: 500;
+        }
+        
+        .hover\:bg-indigo-700:hover {
+            background-color: #4338ca;
+        }
+        
+        .transition-all {
+            transition-property: all;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 150ms;
+        }
+        
+        .duration-300 {
+            transition-duration: 300ms;
+        }
+        
+        .transform {
+            transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+        }
+        
+        .hover\:translate-y-\[-3px\]:hover {
+            transform: translateY(-3px);
+        }
+        
+        .hover\:shadow-lg:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* Footer styles */
+        .bg-gray-900 {
+            background-color: #111827;
+        }
+        
+        .text-white {
+            color: white;
+        }
+        
+        .py-12 {
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+        }
+        
+        .grid-cols-2 {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        
+        .md\:grid-cols-4 {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+        
+        .gap-8 {
+            gap: 2rem;
+        }
+        
+        .text-lg {
+            font-size: 1.125rem;
+        }
+        
+        .font-semibold {
+            font-weight: 600;
+        }
+        
+        .mb-4 {
+            margin-bottom: 1rem;
+        }
+        
+        .text-gray-400 {
+            color: #9ca3af;
+        }
+        
+        .space-y-2 > * + * {
+            margin-top: 0.5rem;
+        }
+        
+        .hover\:text-white:hover {
+            color: white;
+        }
+        
+        .text-sm {
+            font-size: 0.875rem;
+        }
+        
+        .font-semibold {
+            font-weight: 600;
+        }
+        
+        .uppercase {
+            text-transform: uppercase;
+        }
+        
+        .tracking-wider {
+            letter-spacing: 0.05em;
+        }
+        
+        .mb-4 {
+            margin-bottom: 1rem;
+        }
+        
+        .border-t {
+            border-top-width: 1px;
+        }
+        
+        .border-gray-800 {
+            border-color: #1f2937;
+        }
+        
+        .mt-8 {
+            margin-top: 2rem;
+        }
+        
+        .pt-8 {
+            padding-top: 2rem;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        /* Responsive utilities */
+        @media (min-width: 640px) {
+            .sm\:flex {
+                display: flex;
+            }
+            
+            .sm\:hidden {
+                display: none;
+            }
+            
+            .sm\:ml-6 {
+                margin-left: 1.5rem;
+            }
+            
+            .sm\:items-center {
+                align-items: center;
+            }
+            
+            .sm\:w-full {
+                width: 100%;
+            }
+            
+            .sm\:max-w-md {
+                max-width: 28rem;
+            }
+            
+            .sm\:mx-auto {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .sm\:px-6 {
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+            }
+            
+            .sm\:rounded-lg {
+                border-radius: 0.5rem;
+            }
+            
+            .sm\:px-10 {
+                padding-left: 2.5rem;
+                padding-right: 2.5rem;
+            }
+            
+            .sm\:text-sm {
+                font-size: 0.875rem;
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .md\:text-5xl {
+                font-size: 3rem;
+            }
+            
+            .md\:grid-cols-2 {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+            
+            .md\:grid-cols-4 {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .lg\:flex-row {
+                flex-direction: row;
+            }
+            
+            .lg\:w-1\/2 {
+                width: 50%;
+            }
+            
+            .lg\:w-1\/3 {
+                width: 33.333333%;
+            }
+            
+            .lg\:w-2\/3 {
+                width: 66.666667%;
+            }
+            
+            .lg\:col-span-1 {
+                grid-column: span 1 / span 1;
+            }
+            
+            .lg\:col-span-2 {
+                grid-column: span 2 / span 2;
+            }
+            
+            .lg\:col-span-3 {
+                grid-column: span 3 / span 3;
+            }
+            
+            .lg\:grid-cols-3 {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+            
+            .lg\:px-8 {
+                padding-left: 2rem;
+                padding-right: 2rem;
+            }
+            
+            .lg\:mb-0 {
+                margin-bottom: 0;
+            }
+            
+            .lg\:flex-row {
+                flex-direction: row;
+            }
+            
+            .lg\:pr-6 {
+                padding-right: 1.5rem;
+            }
+            
+            .lg\:mb-0 {
+                margin-bottom: 0;
+            }
+            
+            .lg\:flex-row {
+                flex-direction: row;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Page -->
+    <div id="login-page" class="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden">
+        <video autoplay muted loop class="absolute w-full h-full object-cover z-0">
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-medical-team-in-a-hospital-40132-large.mp4" type="video/mp4">
+        </video>
+        <div class="absolute inset-0 bg-black bg-opacity-50 z-0"></div>
+        <div class="sm:mx-auto sm:w-full sm:max-w-md relative z-10">
+            <div class="flex justify-center">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/490969f7-9725-4cfc-bc0e-a3be337a61b2.png" alt="Medical Keeper logo" class="h-8 w-8">
+            </div>
+            <h2 id="page-title" class="mt-6 text-center text-3xl font-extrabold text-white">Medical Keeper Login</h2>
+        </div>
+
+        <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md relative z-10">
+            <div class="bg-white bg-opacity-90 py-8 px-4 shadow-xl sm:rounded-lg sm:px-10">
+                <form id="login-form" class="space-y-6">
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
+                        <div class="mt-1">
+                            <input id="email" name="email" type="email" autocomplete="email" required 
+                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                        <div class="mt-1">
+                            <input id="password" name="password" type="password" autocomplete="current-password" required 
+                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <input id="remember-me" name="remember-me" type="checkbox" 
+                                class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                            <label for="remember-me" class="ml-2 block text-sm text-gray-900">Remember me</label>
+                        </div>
+
+                        <div class="text-sm">
+                            <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Forgot password?</a>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button type="submit" 
+                            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            Sign in
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Signup Form -->
+                <div class="mt-8">
+                    <div class="relative">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-gray-300"></div>
+                        </div>
+                        <div class="relative flex justify-center text-sm">
+                            <span class="px-2 bg-white bg-opacity-90 text-gray-500">Don't have an account?</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-6">
+                        <a href="signup.html" 
+                            class="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            Create Account
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Signup Form (initially hidden) -->
+                <div id="signup-form-container" class="mt-6" style="display: none;">
+                    <div class="text-center mb-6">
+                        <div class="mx-auto w-12 h-12 bg-gray-800 rounded-lg flex items-center justify-center mb-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900">Create Account</h3>
+                    </div>
+                    
+                    <form id="signup-form" class="space-y-6">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label for="signup-firstName" class="block text-sm font-medium text-gray-700">First Name</label>
+                                <input id="signup-firstName" name="firstName" type="text" required 
+                                    class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            </div>
+                            <div>
+                                <label for="signup-lastName" class="block text-sm font-medium text-gray-700">Last Name</label>
+                                <input id="signup-lastName" name="lastName" type="text" required 
+                                    class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="signup-email" class="block text-sm font-medium text-gray-700">Email address</label>
+                            <input id="signup-email" name="email" type="email" autocomplete="email" required 
+                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        </div>
+
+                        <div>
+                            <label for="signup-password" class="block text-sm font-medium text-gray-700">Password</label>
+                            <input id="signup-password" name="password" type="password" autocomplete="new-password" required 
+                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        </div>
+
+                        <div>
+                            <label for="signup-dateOfBirth" class="block text-sm font-medium text-gray-700">Date of Birth</label>
+                            <input id="signup-dateOfBirth" name="dateOfBirth" type="date" required 
+                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        </div>
+
+                        <div>
+                            <label for="signup-phoneNumber" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                            <input id="signup-phoneNumber" name="phoneNumber" type="tel" required 
+                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        </div>
+
+                        <div>
+                            <button type="submit" 
+                                class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                Create Account
+                            </button>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="button" id="back-to-login-btn" 
+                                class="text-sm text-indigo-600 hover:text-indigo-500">
+                                Back to Login
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content (initially hidden) -->
+    <div id="main-content" class="hidden">
+        <!-- Navbar -->
+        <nav class="navbar fixed w-full z-50 bg-white bg-opacity-80 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                      <!--  <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/490969f7-9725-4cfc-bc0e-a3be337a61b2.png" alt="Medical Keeper logo - stylized medical cross with digital circuit design" class="h-8 w-8">            -->
+                        <span class="ml-2 text-xl font-bold text-indigo-600">Medical Keeper</span>
+                    </div>
+                </div>
+                <div class="hidden sm:ml-6 sm:flex sm:items-center space-x-2">
+                    <a href="#features" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-indigo-600">Features</a>
+                    <a href="#dashboard" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-indigo-600">Dashboard</a>
+                    <a href="#assistant" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-indigo-600">AI Assistant</a>
+                    <a href="#payments" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-indigo-600">Payments</a>
+                </div>
+                <div class="flex items-center">
+                    <button class="login-btn bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 transition-all duration-300 transform hover:translate-y-[-3px] hover:shadow-lg">
+                        Login
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-bg pt-32 pb-20 text-white relative overflow-hidden">
+        <video autoplay muted loop id="hospitalVideo" class="absolute w-full h-full object-cover z-0">
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-hospital-building-aerial-view-4085-large.mp4" type="video/mp4">
+        </video>
+        <div class="relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row items-center">
+                <div class="lg:w-1/2 mb-10 lg:mb-0">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-6">Revolutionizing Healthcare Records</h1>
+                    <p class="text-lg mb-8">Medical Keeper provides cutting-edge medical record management with AI-powered health insights, seamless billing, and comprehensive patient tracking.</p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button class="bg-white text-indigo-600 px-6 py-3 rounded-lg font-medium hover:bg-gray-100 transition duration-300">
+                            Get Started
+                        </button>
+                        <button class="border-2 border-white text-white px-6 py-3 rounded-lg font-medium hover:bg-white hover:text-indigo-600 transition duration-300">
+                            Learn More
+                        </button>
+                    </div>
+                </div>
+                <div class="lg:w-1/2 flex justify-center relative">
+                    <div class="relative w-full max-w-lg">
+                        <div id="threejs-container" class="w-full h-96"></div>
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/141e3927-7eb7-4857-88bb-a51a0a6dff5b.png" alt="3D illustration of digital medical interface showing health metrics" class="absolute inset-0 w-full h-full object-contain floating">
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Comprehensive Healthcare Solutions</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">Medical Keeper combines advanced technology with healthcare expertise to deliver unparalleled patient record management.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="card-3d bg-white rounded-xl shadow-lg overflow-hidden p-6 hover:bg-gray-50 transition duration-300">
+                    <div class="feature-icon mx-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3 text-center">Electronic Health Records</h3>
+                    <p class="text-gray-600 text-center">Secure, centralized digital records accessible anytime, anywhere with advanced encryption and access control.</p>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="card-3d bg-white rounded-xl shadow-lg overflow-hidden p-6 hover:bg-gray-50 transition duration-300">
+                    <div class="feature-icon mx-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3 text-center">AI Health Assistant</h3>
+                    <p class="text-gray-600 text-center">Our virtual assistant conducts intelligent health interviews and provides preliminary assessments.</p>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="card-3d bg-white rounded-xl shadow-lg overflow-hidden p-6 hover:bg-gray-50 transition duration-300">
+                    <div class="feature-icon mx-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3 text-center">Health Analytics</h3>
+                    <p class="text-gray-600 text-center">Comprehensive data visualization showing trends in vital signs, medications, and health progress.</p>
+                </div>
+                
+                <!-- Feature 4 -->
+                <div class="card-3d bg-white rounded-xl shadow-lg overflow-hidden p-6 hover:bg-gray-50 transition duration-300">
+                    <div class="feature-icon mx-auto">
+                        <svg xmlns="http://w3.org/2000/svg" class="h-10 w-10 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3 text-center">Step Tracking</h3>
+                    <p class="text-gray-600 text-center">Integrated step counter with daily, weekly, and monthly activity analysis and recommendations.</p>
+                </div>
+                
+                <!-- Feature 5 -->
+                <div class="card-3d bg-white rounded-xl shadow-lg overflow-hidden p-6 hover:bg-gray-50 transition duration-300">
+                    <div class="feature-icon mx-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3 text-center">Billing System</h3>
+                    <p class="text-gray-600 text-center">Automated billing with payment tracking, insurance claim support, and financial analytics.</p>
+                </div>
+                
+                <!-- Feature 6 -->
+                <div class="card-3d bg-white rounded-xl shadow-lg overflow-hidden p-6 hover:bg-gray-50 transition duration-300">
+                    <div class="feature-icon mx-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3 text-center">Doctor Portal</h3>
+                    <p class="text-gray-600 text-center">Specialized interface for healthcare providers with AI-generated patient summaries and alerts.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Section -->
+    <section id="dashboard" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Patient Dashboard</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">Comprehensive overview of patient health metrics and records</p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Health Summary -->
+                <div class="lg:col-span-1 card-3d bg-white rounded-xl shadow-lg overflow-hidden p-6">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-6">Health Summary</h3>
+                    <div class="flex items-center justify-center mb-6">
+                        <div class="health-score bg-green-100 text-green-800">
+                            87
+                        </div>
+                    </div>
+                    <p class="text-center text-gray-600 mb-6">Overall Health Score</p>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-gray-600">Blood Pressure</span>
+                                <span class="text-sm font-medium text-indigo-600">120/80</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-green-500 h-2.5 rounded-full" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-gray-600">Heart Rate</span>
+                                <span class="text-sm font-medium text-indigo-600">72 bpm</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-blue-500 h-2.5 rounded-full" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-gray-600">Glucose Level</span>
+                                <span class="text-sm font-medium text-indigo-600">98 mg/dL</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-yellow-500 h-2.5 rounded-full" style="width: 80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="mt-6 w-full bg-indigo-100 text-indigo-600 py-2 rounded-lg font-medium hover:bg-indigo-200 transition duration-300">
+                        View Detailed Report
+                    </button>
+                </div>
+                
+                <!-- Step Counter -->
+                <div class="lg:col-span-2 card-3d step-counter rounded-xl shadow-lg overflow-hidden p-6 text-white">
+                    <div class="flex flex-col lg:flex-row">
+                        <div class="lg:w-1/2 mb-6 lg:mb-0 lg:pr-6">
+                            <h3 class="text-xl font-semibold mb-6">Activity Tracker</h3>
+                            <div class="flex justify-between items-center mb-4">
+                                <div>
+                                    <p class="text-sm opacity-80">Today's Steps</p>
+                                    <p class="text-3xl font-bold">8,542</p>
+                                </div>
+                                <div class="w-24 h-24">
+                                    <canvas id="stepsGauge"></canvas>
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-3 gap-4 mb-6">
+                                <div class="bg-white bg-opacity-20 rounded-lg p-3 text-center">
+                                    <p class="text-xs opacity-80">Daily Goal</p>
+                                    <p class="text-lg font-bold">10,000</p>
+                                </div>
+                                <div class="bg-white bg-opacity-20 rounded-lg p-3 text-center">
+                                    <p class="text-xs opacity-80">Distance</p>
+                                    <p class="text-lg font-bold">6.2 km</p>
+                                </div>
+                                <div class="bg-white bg-opacity-20 rounded-lg p-3 text-center">
+                                    <p class="text-xs opacity-80">Calories</p>
+                                    <p class="text-lg font-bold">420</p>
+                                </div>
+                            </div>
+                            
+                            <button class="w-full bg-white bg-opacity-30 text-white py-2 rounded-lg font-medium hover:bg-opacity-40 transition duration-300">
+                                Sync Activity Data
+                            </button>
+                        </div>
+                        
+                        <div class="lg:w-1/2">
+                            <canvas id="stepsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Medical History -->
+                <div class="lg:col-span-3 card-3d medical-history-card rounded-xl shadow-lg overflow-hidden text-white">
+                    <div class="flex flex-col lg:flex-row">
+                        <div class="lg:w-1/3 p-6">
+                            <h3 class="text-xl font-semibold mb-6">Medical History</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <p class="text-sm opacity-80">Last Checkup</p>
+                                    <p class="text-lg font-medium">May 15, 2023</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm opacity-80">Current Medications</p>
+                                    <p class="text-lg font-medium">Lipitor, Metformin</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm opacity-80">Allergies</p>
+                                    <p class="text-lg font-medium">Penicillin</p>
+                                </div>
+                            </div>
+                            <button class="mt-6 w-full bg-white bg-opacity-30 text-white py-2 rounded-lg font-medium hover:bg-opacity-40 transition duration-300">
+                                View Full History
+                            </button>
+                        </div>
+                        
+                        <div class="lg:w-2/3 p-6">
+                            <div class="flex justify-between items-center mb-6">
+                                <h4 class="text-lg font-semibold">Recent Lab Results</h4>
+                                <button class="text-sm bg-white bg-opacity-30 px-3 py-1 rounded-lg">Add New</button>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full bg-white bg-opacity-10 rounded-lg">
+                                    <thead>
+                                        <tr class="border-b border-white border-opacity-20">
+                                            <th class="text-left px-4 py-3">Test</th>
+                                            <th class="text-left px-4 py-3">Result</th>
+                                            <th class="text-left px-4 py-3">Range</th>
+                                            <th class="text-left px-4 py-3">Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="border-b border-white border-opacity-10">
+                                            <td class="px-4 py-3">Cholesterol</td>
+                                            <td class="px-4 py-3">180 mg/dL</td>
+                                            <td class="px-4 py-3"><span class="text-green-300">Normal</span> (125-200)</td>
+                                            <td class="px-4 py-3">05/15/23</td>
+                                        </tr>
+                                        <tr class="border-b border-white border-opacity-10">
+                                            <td class="px-4 py-3">Hemoglobin A1C</td>
+                                            <td class="px-4 py-3">5.8%</td>
+                                            <td class="px-4 py-3"><span class="text-green-300">Normal</span> (4.0-6.0)</td>
+                                            <td class="px-4 py-3">05/15/23</td>
+                                        </tr>
+                                        <tr class="border-b border-white border-opacity-10">
+                                            <td class="px-4 py-3">Vitamin D</td>
+                                            <td class="px-4 py-3">28 ng/mL</td>
+                                            <td class="px-4 py-3"><span class="text-yellow-300">Low</span> (30-100)</td>
+                                            <td class="px-4 py-3">05/15/23</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-4 py-3">TSH</td>
+                                            <td class="px-4 py-3">2.1 mIU/L</td>
+                                            <td class="px-4 py-3"><span class="text-green-300">Normal</span> (0.4-4.0)</td>
+                                            <td class="px-4 py-3">05/15/23</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Assistant Section -->
+    <section id="assistant" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">AI Health Assistant</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">Our intelligent assistant helps evaluate your health and provides personalized recommendations</p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Chat Interface -->
+                <div class="card-3d bg-white rounded-xl shadow-lg overflow-hidden p-6">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-6">Interview Mode</h3>
+                    
+                    <div id="chat-container" class="h-96 overflow-y-auto mb-6 space-y-4">
+                        <!-- Chat messages will be added here -->
+                        <div class="flex flex-col">
+                            <div class="chat-bubble ai-bubble p-4 mb-2">
+                                <p>Hello! I'm your Medical Keeper AI assistant. I'll ask you some questions to better understand your health status.</p>
+                            </div>
+                            <div class="chat-bubble ai-bubble p-4 mb-2">
+                                <p>Have you experienced any unusual symptoms in the past two weeks?</p>
+                                <div class="flex space-x-2 mt-2">
+                                    <button class="symptom-btn bg-indigo-100 text-indigo-600 px-3 py-1 rounded-md text-sm hover:bg-indigo-200" value="Fatigue">Fatigue</button>
+                                    <button class="symptom-btn bg-indigo-100 text-indigo-600 px-3 py-1 rounded-md text-sm hover:bg-indigo-200" value="Fever">Fever</button>
+                                    <button class="symptom-btn bg-indigo-100 text-indigo-600 px-3 py-1 rounded-md text-sm hover:bg-indigo-200" value="Pain">Pain</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex">
+                        <input type="text" id="chat-input" placeholder="Type your response..." class="flex-grow border border-gray-300 rounded-l-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <button id="send-btn" class="bg-indigo-600 text-white px-4 py-2 rounded-r-lg hover:bg-indigo-700">
+                            Send
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Health Insights -->
+                <div class="card-3d bg-gray-50 rounded-xl shadow-lg overflow-hidden p-6">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-6">Health Insights</h3>
+                    
+                    <div class="space-y-6">
+                        <div class="bg-white rounded-lg p-4 shadow">
+                            <h4 class="font-medium text-gray-900 mb-2">Suggested Actions</h4>
+                            <ul class="list-disc list-inside text-gray-600 space-y-1">
+                                <li>Schedule follow-up blood test for Vitamin D</li>
+                                <li>Increase daily step goal to 9,000 steps</li>
+                                <li>Consider dietary adjustments for better sugar control</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="bg-white rounded-lg p-4 shadow">
+                            <h4 class="font-medium text-gray-900 mb-2">Potential Risks</h4>
+                            <div class="flex items-center mb-2">
+                                <div class="w-2 h-2 rounded-full bg-yellow-500 mr-2"></div>
+                                <span class="text-sm text-gray-700">Moderate risk for Vitamin D deficiency</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-2 h-2 rounded-full bg-green-500 mr-2"></div>
+                                <span class="text-sm text-gray-700">Low risk for diabetes complications</span>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-lg p-4 shadow">
+                            <h4 class="font-medium text-gray-900 mb-2">Doctor Alert</h4>
+                            <p class="text-gray-600 mb-3">Based on your responses, we recommend consulting your doctor about:</p>
+                            <button class="w-full bg-indigo-100 text-indigo-600 py-2 rounded-lg font-medium hover:bg-indigo-200 transition duration-300">
+                                View Suggested Questions for Doctor
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payments Section -->
+    <section id="payments" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Billing & Payments</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">Easily manage your medical expenses and insurance claims</p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Payment Card -->
+                <div class="card-3d payment-card rounded-xl shadow-lg overflow-hidden p-6 text-white">
+                    <div class="flex justify-between items-center mb-8">
+                        <h3 class="text-xl font-semibold">Payment Summary</h3>
+                        <button class="bg-white bg-opacity-30 text-white px-4 py-2 rounded-lg hover:bg-opacity-40 transition duration-300">
+                            Pay Now
+                        </button>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-6 mb-8">
+                        <div>
+                            <p class="text-sm opacity-80">Total Balance</p>
+                            <p class="text-2xl font-bold">$245.75</p>
+                        </div>
+                        <div>
+                            <p class="text-sm opacity-80">Insurance Coverage</p>
+                            <p class="text-2xl font-bold">$180.00</p>
+                        </div>
+                        <div>
+                            <p class="text-sm opacity-80">Pending Claims</p>
+                            <p class="text-2xl font-bold">$125.00</p>
+                        </div>
+                        <div>
+                            <p class="text-sm opacity-80">Patient Responsibility</p>
+                            <p class="text-2xl font-bold">$65.75</p>
+                        </div>
+                    </div>
+                    
+                    <canvas id="paymentChart"></canvas>
+                </div>
+                
+                <!-- Invoice List -->
+                <div class="card-3d bg-white rounded-xl shadow-lg overflow-hidden p-6">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-6">Recent Invoices</h3>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="border-b border-gray-200">
+                                    <th class="text-left px-4 py-3 text-gray-600 font-medium">Date</th>
+                                    <th class="text-left px-4 py-3 text-gray-600 font-medium">Service</th>
+                                    <th class="text-left px-4 py-3 text-gray-600 font-medium">Amount</th>
+                                    <th class="text-left px-4 py-3 text-gray-600 font-medium">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                    <td class="px-4 py-3">05/15/23</td>
+                                    <td class="px-4 py-3">Annual Checkup</td>
+                                    <td class="px-4 py-3">$125.00</td>
+                                    <td class="px-4 py-3">
+                                        <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Paid</span>
+                                    </td>
+                                </tr>
+                                <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                    <td class="px-4 py-3">04/20/23</td>
+                                    <td class="px-4 py-3">Lab Tests</td>
+                                    <td class="px-4 py-3">$85.75</td>
+                                    <td class="px-4 py-3">
+                                        <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">Pending</span>
+                                    </td>
+                                </tr>
+                                <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                    <td class="px-4 py-3">03/10/23</td>
+                                    <td class="px-4 py-3">Consultation</td>
+                                    <td class="px-4 py-3">$65.00</td>
+                                    <td class="px-4 py-3">
+                                        <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Paid</span>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-4 py-3">02/15/23</td>
+                                    <td class="px-4 py-3">Medication</td>
+                                    <td class="px-4 py-3">$35.00</td>
+                                    <td class="px-4 py-3">
+                                        <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Paid</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <button class="mt-6 w-full bg-indigo-600 text-white py-2 rounded-lg font-medium hover:bg-indigo-700 transition duration-300">
+                        View All Invoices
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Medical Keeper</h3>
+                    <p class="text-gray-400">Advanced healthcare record management for patients and providers.</p>
+                </div>
+                
+                <div>
+                    <h4 class="text-sm font-semibold uppercase tracking-wider mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Home</a></li>
+                        <li><a href="#features" class="text-gray-400 hover:text-white">Features</a></li>
+                        <li><a href="#dashboard" class="text-gray-400 hover:text-white">Dashboard</a></li>
+                        <li><a href="#assistant" class="text-gray-400 hover:text-white">AI Assistant</a></li>
+                        <li><a href="#payments" class="text-gray-400 hover:text-white">Payments</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-sm font-semibold uppercase tracking-wider mb-4">Legal</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Terms of Service</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">HIPAA Compliance</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Security</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-sm font-semibold uppercase tracking-wider mb-4">Contact Us</h4>
+                    <address class="text-gray-400 not-italic space-y-2">
+                        <p>123 Medical Center Dr</p>
+                        <p>Boston, MA 02115</p>
+                        <p>Phone: (555) 123-4567</p>
+                        <p>Email: info@medicalkeeper.com</p>
+                    </address>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2023 Medical Keeper. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Three.js Animation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Three.js setup
+            const container = document.getElementById('threejs-container');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+            camera.position.z = 5;
+            
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(width, height);
+            container.appendChild(renderer.domElement);
+            
+            // Create DNA-like helix
+            const helixGeometry = new THREE.BufferGeometry();
+            const helixMaterial = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.3 });
+            
+            const helixPoints = [];
+            const radius = 1.5;
+            const turns = 3;
+            const segments = 100;
+            
+            for (let i = 0; i <= segments; i++) {
+                const percent = i / segments;
+                const angle = percent * Math.PI * 2 * turns;
+                const x = radius * Math.cos(angle);
+                const y = radius * Math.sin(angle);
+                const z = -turns + percent * turns * 2;
+                
+                helixPoints.push(new THREE.Vector3(x, y, z));
+            }
+            
+            helixGeometry.setFromPoints(helixPoints);
+            const helix = new THREE.Line(helixGeometry, helixMaterial);
+            scene.add(helix);
+            
+            // Create pulsing spheres
+            const spheres = [];
+            const sphereGeometry = new THREE.SphereGeometry(0.15, 16, 16);
+            const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+            
+            for (let i = 0; i < 5; i++) {
+                const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial.clone());
+                sphere.position.copy(helixPoints[Math.floor(i * segments/5)]);
+                spheres.push(sphere);
+                scene.add(sphere);
+            }
+            
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                helix.rotation.x += 0.005;
+                helix.rotation.y += 0.005;
+                
+                spheres.forEach((sphere, i) => {
+                    const scale = 1 + Math.sin(Date.now() * 0.002 + i) * 0.3;
+                    sphere.scale.set(scale, scale, scale);
+                });
+                
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                const width = container.clientWidth;
+                const height = container.clientHeight;
+                
+                camera.aspect = width / height;
+                camera.updateProjectionMatrix();
+                renderer.setSize(width, height);
+            });
+            
+            // Charts
+            // Steps Gauge
+            const stepsGaugeCtx = document.getElementById('stepsGauge').getContext('2d');
+            new Chart(stepsGaugeCtx, {
+                type: 'doughnut',
+                data: {
+                    datasets: [{
+                        data: [85, 15],
+                        backgroundColor: ['rgba(255, 255, 255, 0.8)', 'rgba(255, 255, 255, 0.2)'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    cutout: '85%',
+                    rotation: -90,
+                    circumference: 180,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { enabled: false }
+                    }
+                }
+            });
+            
+            // Steps Chart
+            const stepsChartCtx = document.getElementById('stepsChart').getContext('2d');
+            new Chart(stepsChartCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Steps',
+                        data: [6570, 7230, 8542, 7890, 9100, 6200, 4500],
+                        borderColor: 'rgba(255, 255, 255, 0.8)',
+                        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                        tension: 0.4,
+                        fill: true,
+                        pointBackgroundColor: 'rgba(255, 255, 255, 1)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                            ticks: { color: 'rgba(255, 255, 255, 0.7)' }
+                        },
+                        x: {
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                            ticks: { color: 'rgba(255, 255, 255, 0.7)' }
+                        }
+                    }
+                }
+            });
+            
+            // Payment Chart
+            const paymentChartCtx = document.getElementById('paymentChart').getContext('2d');
+            new Chart(paymentChartCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+                    datasets: [{
+                        label: 'Insurance',
+                        data: [120, 85, 110, 150, 180],
+                        backgroundColor: 'rgba(255, 255, 255, 0.6)'
+                    }, {
+                        label: 'Patient',
+                        data: [65, 35, 50, 45, 65],
+                        backgroundColor: 'rgba(255, 255, 255, 0.3)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                color: 'rgba(255, 255, 255, 0.8)'
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                            ticks: { color: 'rgba(255, 255, 255, 0.7)' }
+                        },
+                        x: {
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                            ticks: { color: 'rgba(255, 255, 255, 0.7)' }
+                        }
+                    }
+                }
+            });
+            
+            // AI Assistant Chat Functionality
+            const chatContainer = document.getElementById('chat-container');
+            const chatInput = document.getElementById('chat-input');
+            const sendBtn = document.getElementById('send-btn');
+            const symptomBtns = document.querySelectorAll('.symptom-btn');
+            
+            function addMessage(content, isUser = false) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `flex flex-col ${isUser ? 'items-end' : 'items-start'}`;
+                
+                const bubbleDiv = document.createElement('div');
+                bubbleDiv.className = `chat-bubble ${isUser ? 'user-bubble' : 'ai-bubble'} p-4 mb-2`;
+                bubbleDiv.innerHTML = `<p>${content}</p>`;
+                
+                messageDiv.appendChild(bubbleDiv);
+                chatContainer.appendChild(messageDiv);
+                
+                // Scroll to bottom
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+            
+            sendBtn.addEventListener('click', function() {
+                if (chatInput.value.trim() !== '') {
+                    addMessage(chatInput.value, true);
+                    chatInput.value = '';
+                    
+                    // Simulate AI response
+                    setTimeout(() => {
+                        addMessage("Thank you for sharing that information. Would you like me to record these symptoms in your health profile?", false);
+                        
+                        // Add response options
+                        const optionsDiv = document.createElement('div');
+                        optionsDiv.className = 'flex flex-col items-start';
+                        
+                        const buttonsDiv = document.createElement('div');
+                        buttonsDiv.className = 'flex space-x-2 mt-2';
+                        
+                        const yesBtn = document.createElement('button');
+                        yesBtn.className = 'bg-indigo-100 text-indigo-600 px-3 py-1 rounded-md text-sm hover:bg-indigo-200';
+                        yesBtn.textContent = 'Yes, please';
+                        yesBtn.addEventListener('click', function() {
+                            addMessage('Yes, please', true);
+                            
+                            setTimeout(() => {
+                                addMessage("I've recorded these symptoms in your profile. Would you like me to suggest possible causes or recommend next steps?", false);
+                                
+                                const nextOptionsDiv = document.createElement('div');
+                                nextOptionsDiv.className = 'flex flex-col items-start';
+                                
+                                const nextButtonsDiv = document.createElement('div');
+                                nextButtonsDiv.className = 'flex space-x-2 mt-2';
+                                
+                                const causesBtn = document.createElement('button');
+                                causesBtn.className = 'bg-indigo-100 text-indigo-600 px-3 py-1 rounded-md text-sm hover:bg-indigo-200';
+                                causesBtn.textContent = 'Possible causes';
+                                causesBtn.addEventListener('click', function() {
+                                    addMessage('Possible causes', true);
+                                    
+                                    setTimeout(() => {
+                                        addMessage("Based on your symptoms and medical history, possible causes might include:<br><br>- Mild dehydration<br>- Seasonal allergies<br>- Low Vitamin D levels<br><br>Would you like me to schedule a doctor's appointment?", false);
+                                    }, 1000);
+                                });
+                                
+                                const stepsBtn = document.createElement('button');
+                                stepsBtn.className = 'bg-indigo-100 text-indigo-600 px-3 py-1 rounded-md text-sm hover:bg-indigo-200';
+                                stepsBtn.textContent = 'Next steps';
+                                stepsBtn.addEventListener('click', function() {
+                                    addMessage('Next steps', true);
+                                    
+                                    setTimeout(() => {
+                                        addMessage("For your symptoms, I recommend:<br><br>- Increase water intake<br>- Monitor symptoms for 48 hours<br>- Consider over-the-counter antihistamines if symptoms persist<br>- Schedule a follow-up if symptoms worsen", false);
+                                    }, 1000);
+                                });
+                                
+                                nextButtonsDiv.appendChild(causesBtn);
+                                nextButtonsDiv.appendChild(stepsBtn);
+                                nextOptionsDiv.appendChild(nextButtonsDiv);
+                                
+                                const messageDiv = document.createElement('div');
+                                messageDiv.className = 'flex flex-col items-start';
+                                messageDiv.appendChild(nextOptionsDiv);
+                                
+                                chatContainer.appendChild(messageDiv);
+                                chatContainer.scrollTop = chatContainer.scrollHeight;
+                            }, 1000);
+                        });
+                        
+                        const noBtn = document.createElement('button');
+                        noBtn.className = 'bg-indigo-100 text-indigo-600 px-3 py-1 rounded-md text-sm hover:bg-indigo-200';
+                        noBtn.textContent = 'Not now';
+                        noBtn.addEventListener('click', function() {
+                            addMessage('Not now', true);
+                            
+                            setTimeout(() => {
+                                addMessage("Understood. You can always access your symptom log later to update it. Is there anything else health-related I can help you with today?", false);
+                            }, 1000);
+                        });
+                        
+                        buttonsDiv.appendChild(yesBtn);
+                        buttonsDiv.appendChild(noBtn);
+                        optionsDiv.appendChild(buttonsDiv);
+                        
+                        const messageDiv = document.createElement('div');
+                        messageDiv.className = 'flex flex-col items-start';
+                        messageDiv.appendChild(optionsDiv);
+                        
+                        chatContainer.appendChild(messageDiv);
+                        chatContainer.scrollTop = chatContainer.scrollHeight;
+                    }, 1000);
+                }
+            });
+            
+            chatInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendBtn.click();
+                }
+            });
+            
+            symptomBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    addMessage(this.value, true);
+                    
+                    setTimeout(() => {
+                        addMessage(`Thank you for reporting ${this.value}. On a scale from 1-10, how severe would you say this ${this.value} is?`, false);
+                    }, 1000);
+                });
+            });
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Animation for cards on scroll
+            const animatedCards = document.querySelectorAll('.card-3d');
+            
+            function checkCards() {
+                animatedCards.forEach(card => {
+                    const cardTop = card.getBoundingClientRect().top;
+                    const windowHeight = window.innerHeight;
+                    
+                    if (cardTop < windowHeight * 0.85) {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    } else {
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(50px)';
+                    }
+                });
+            }
+            
+            // Initial check
+            checkCards();
+            
+            // Add event listener
+            window.addEventListener('scroll', checkCards);
+            
+            // Login Form Handler
+            document.getElementById('login-form').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                
+                if (!email || !password) {
+                    alert('Please enter both email and password');
+                    return;
+                }
+
+                try {
+                    const response = await fetch('/api/auth/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ email, password })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        // Store token in localStorage
+                        localStorage.setItem('token', data.data.token);
+                        localStorage.setItem('user', JSON.stringify(data.data.user));
+                        
+                    // Hide login and show main content
+                    document.getElementById('login-page').classList.add('hidden');
+                    document.getElementById('main-content').classList.remove('hidden');
+                        
+                        // Update UI with user info
+                        updateUserInterface(data.data.user);
+                    
+                    // Smooth scroll to top
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                        alert(data.message || 'Login failed');
+                    }
+                } catch (error) {
+                    console.error('Login error:', error);
+                    alert('Login failed. Please try again.');
+                }
+            });
+
+            // Function to update UI with user info
+            function updateUserInterface(user) {
+                // Update navbar with user name
+                const loginBtn = document.querySelector('.login-btn');
+                if (loginBtn) {
+                    loginBtn.textContent = `${user.firstName} ${user.lastName}`;
+                    loginBtn.classList.remove('bg-indigo-600', 'hover:bg-indigo-700');
+                    loginBtn.classList.add('bg-green-600', 'hover:bg-green-700');
+                }
+
+                // Update dashboard with user data
+                if (user.medicalProfile) {
+                    // Update health summary if available
+                    const healthScore = document.querySelector('.health-score');
+                    if (healthScore && user.medicalProfile.bloodType) {
+                        // You could calculate a health score based on medical data
+                        healthScore.textContent = '87'; // Placeholder
+                    }
+                }
+            }
+
+            // Check if user is already logged in
+            function checkAuthStatus() {
+                const token = localStorage.getItem('token');
+                const user = localStorage.getItem('user');
+                
+                if (token && user) {
+                    try {
+                        const userData = JSON.parse(user);
+                        updateUserInterface(userData);
+                        document.getElementById('login-page').classList.add('hidden');
+                        document.getElementById('main-content').classList.remove('hidden');
+                    } catch (error) {
+                        console.error('Error parsing user data:', error);
+                        localStorage.removeItem('token');
+                        localStorage.removeItem('user');
+                    }
+                }
+            }
+
+            // Logout function
+            function logout() {
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                location.reload();
+            }
+
+            // Add logout functionality to navbar button
+            document.querySelector('.login-btn').addEventListener('click', function() {
+                const token = localStorage.getItem('token');
+                if (token) {
+                    // User is logged in, show logout option
+                    if (confirm('Do you want to logout?')) {
+                        logout();
+                    }
+                } else {
+                    // User is not logged in, show login page
+                    document.getElementById('main-content').classList.add('hidden');
+                    document.getElementById('login-page').classList.remove('hidden');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            });
+
+            // Check auth status on page load
+            checkAuthStatus();
+
+            // Signup form toggle functionality
+            document.getElementById('show-signup-btn').addEventListener('click', function() {
+                // Hide the login form and "Create Account" button section
+                document.getElementById('login-form').style.display = 'none';
+                document.querySelector('.mt-8').style.display = 'none';
+                // Show the signup form
+                document.getElementById('signup-form-container').style.display = 'block';
+                // Change the title
+                document.getElementById('page-title').textContent = 'Create Account';
+            });
+
+            document.getElementById('back-to-login-btn').addEventListener('click', function() {
+                // Show the login form and "Create Account" button section
+                document.getElementById('login-form').style.display = 'block';
+                document.querySelector('.mt-8').style.display = 'block';
+                // Hide the signup form
+                document.getElementById('signup-form-container').style.display = 'none';
+                // Change the title back
+                document.getElementById('page-title').textContent = 'Medical Keeper Login';
+            });
+
+            // Signup Form Handler
+            document.getElementById('signup-form').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const formData = {
+                    firstName: document.getElementById('signup-firstName').value,
+                    lastName: document.getElementById('signup-lastName').value,
+                    email: document.getElementById('signup-email').value,
+                    password: document.getElementById('signup-password').value,
+                    dateOfBirth: document.getElementById('signup-dateOfBirth').value,
+                    phoneNumber: document.getElementById('signup-phoneNumber').value
+                };
+
+                // Basic validation
+                if (!formData.firstName || !formData.lastName || !formData.email || 
+                    !formData.password || !formData.dateOfBirth || !formData.phoneNumber) {
+                    alert('Please fill in all required fields');
+                    return;
+                }
+
+                if (formData.password.length < 6) {
+                    alert('Password must be at least 6 characters long');
+                    return;
+                }
+
+                try {
+                    const response = await fetch('/api/auth/register', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(formData)
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        // Store token in localStorage
+                        localStorage.setItem('token', data.data.token);
+                        localStorage.setItem('user', JSON.stringify(data.data.user));
+                        
+                        // Hide login and show main content
+                        document.getElementById('login-page').classList.add('hidden');
+                        document.getElementById('main-content').classList.remove('hidden');
+                        
+                        // Update UI with user info
+                        updateUserInterface(data.data.user);
+                        
+                        // Smooth scroll to top
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                        
+                        alert('Account created successfully! Welcome to Medical Keeper.');
+                    } else {
+                        if (data.errors) {
+                            const errorMessages = data.errors.map(error => error.message).join('\n');
+                            alert('Registration failed:\n' + errorMessages);
+                        } else {
+                            alert(data.message || 'Registration failed');
+                        }
+                    }
+                } catch (error) {
+                    console.error('Registration error:', error);
+                    alert('Registration failed. Please try again.');
+                }
+            });
+
+            // Navbar Login Button (existing)
+            document.querySelector('.login-btn').addEventListener('click', function() {
+                document.getElementById('main-content').classList.add('hidden');
+                document.getElementById('login-page').classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // Initialize GSAP animations (for main content only)
+            gsap.from("#main-content .hero-bg h1", {
+                duration: 1,
+                y: -50,
+                opacity: 0,
+                ease: "power2.out"
+            });
+            
+            gsap.from(".hero-bg p", {
+                duration: 1,
+                opacity: 0,
+                delay: 0.3,
+                ease: "power2.out"
+            });
+            
+            gsap.from(".hero-bg button", {
+                duration: 1,
+                opacity: 0,
+                y: 20,
+                delay: 0.6,
+                stagger: 0.2,
+                ease: "power2.out"
+            });
+        });
+    </script>
+</body>
+</html>
